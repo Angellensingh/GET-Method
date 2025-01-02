@@ -10,5 +10,4 @@ const connectDB = async()=>{
     console.log('db is connected')
 }
 
-
 module.exports = connectDB
