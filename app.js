@@ -1,17 +1,18 @@
 const mongoose = require('mongoose')
-const routes = require('./routes')
-
+const routes = require('./routes/routes')
+const path = require('path')
+const dotenv = require('dotenv')
 const express = require('express')
 const app = express()
+const connectDB = require('./config/database')
 
-require('dotenv').config()
+dotenv.config({path:path.join(__dirname,'config','.env')})
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const mongoString = process.env.DATABASE_URL
-mongoose.connect(mongoString)
+connectDB()
 
 app.use('/api',routes)
 
-app.listen(3000)
+app.listen(process.env.PORT)
