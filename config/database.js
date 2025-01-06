@@ -1,13 +1,17 @@
-const mongoose = require('mongoose')
-const path = require('path')
-const dotenv = require('dotenv')
-const express = require('express')
-const app = express()
-dotenv.config({path:path.join(__dirname,'config','.env')})
+import mongoose from "mongoose";
+import path from "path";
+import dotenv from "dotenv";
 
-const connectDB = async()=>{
-    await mongoose.connect(process.env.DATABASE_URL)
-    console.log('db is connected')
-}
+dotenv.config({ path: path.join(process.cwd(), "config", ".env") });
+console.log("Database URL:", process.env.DATABASE_URL);
 
-module.exports = connectDB
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.DATABASE_URL);
+    console.log("DB is connected");
+  } catch (error) {
+    console.error("Error connecting to database:", error.message);
+  }
+};
+
+export default connectDB;

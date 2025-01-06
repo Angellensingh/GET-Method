@@ -1,18 +1,17 @@
-const mongoose = require('mongoose')
-const routes = require('./routes/routes')
-const path = require('path')
-const dotenv = require('dotenv')
-const express = require('express')
-const app = express()
-const connectDB = require('./config/database')
+import express from "express";
+import path from "path";
+import dotenv from "dotenv";
+import router from "./routes/user.js";
+import connectDB from "./config/database.js";
 
-dotenv.config({path:path.join(__dirname,'config','.env')})
-
+const app = express();
+dotenv.config({ path: path.join(process.cwd(), "config", ".env") });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-connectDB()
+connectDB();
 
-app.use('/api',routes)
-
-app.listen(process.env.PORT)
+app.use("/api", router);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
+});
